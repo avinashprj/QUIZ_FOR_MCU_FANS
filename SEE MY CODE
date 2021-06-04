@@ -1,0 +1,178 @@
+var readlinesync=require('readline-sync')
+const readline = require("readline");
+const chalk=require('chalk')
+
+const rl = readline.createInterface({
+	input: process.stdin,
+	output: process.stdout
+});
+
+var score=0; 
+var highscore;
+console.log(chalk.bold.bgRedBright("Welcome to  quiz on HOW WELL DO YOU KNOW  MCU(MARVEL) "));
+
+
+const queBank = [
+	{
+		question: (chalk.bold.cyanBright(`
+	What war did captain america fight in?
+	a: world war one 
+	b: world war two
+	c: the vietnam war \n`)),
+		answer: "b"
+	},
+	{
+		question:(chalk.bold.yellowBright( `
+	 What was the first film in the marvel cinematic universe?
+	a: thor
+	b: iron man 
+  c: the incredible hulk \n`)),
+		answer: "b"
+	},
+	{
+		question:(chalk.bold.cyanBright( `
+	Where is black widow from?
+	a: france
+	b: latveria
+	c: europe
+	d: russia \n`)),
+		answer: "d"
+	},
+	{
+		question: (chalk.bold.yellowBright(`
+	Name this war criminal from world war two?
+	a: red skull
+	b: zemo
+	c: green skull \n`)),
+		answer: "a"
+	}
+  ,
+	{
+		question: (chalk.bold.cyanBright(`
+	What is this powerful artifact ?
+	a: the darkhold
+	b: stormcaster
+	c: the eye of agomotto \n`)),
+		answer: "c"
+	}
+  ,
+	{
+		question:(chalk.bold.magentaBright( `
+	Which alien race invaded new york in the avengers ?
+	a: kree
+	b: skrulls
+	c: chitauri \n`)),
+		answer: "c"
+	}
+
+   
+
+];
+
+let questionIndex = 0;
+
+function question() {
+	rl.question(queBank[questionIndex].question, (answer) => {
+		console.log(chalk.bgBlackBright(`You answered: ${answer}`+"\n"));
+
+		if (answer.toLowerCase() == queBank[questionIndex].answer.toLowerCase()) {
+			console.log(chalk.green("right answer\n"));
+      score++;
+      console.log(chalk.bgCyan("your current score is :",score,"\n"))
+			questionIndex++;
+			serve();
+		} else {
+			console.log(chalk.bgRedBright("oops!! wrong answer\n"));
+      
+       console.log(chalk.bgRedBright("your current score is :",score,"\n"));
+       console.log();
+       questionIndex++;
+       serve();
+				
+       
+
+		}
+	});
+}
+var scores=[
+
+  {
+    name:"Junaid",
+    hisScore:"6",
+
+  },
+  {
+    name:"vishal",
+    hisScore:"5",
+  }
+]
+
+
+function serve() {
+	if (isQuestionBankExhausted()) {
+    console.log();
+   
+  console.log(chalk.bold.bgCyan("HighScores"));
+  for(i=0;i<scores.length;i++)
+   {
+     var currentScorer=scores[i]
+
+     console.log(currentScorer.name)
+      console.log(currentScorer.hisScore)
+     console.log(chalk.bold.red("----------------"))
+   }
+   console.log();
+   
+   var highscore;
+function compare(){
+
+   highscore= 6
+  if (score===highscore)
+  {
+    console.log(chalk.bold.bgYellow("YAYY!!! CONGRATS YOU HAVE BEATEN THE HIGH SCORE"))
+    console.log(chalk.bold.magentaBright("please take a screenshot and send it to me and i'll update it in the quiz \n"))
+  }
+}
+compare(); 
+
+		console.log(chalk.bgCyan("Thanks for playing....\n"));
+    console.log(chalk.magentaBright("please provide your valueble feedback here \n\nhttps://www.linkedin.com/in/avinashprajapati914",
+    "or\n","avinashprajapati914@gmail.com"))
+		rl.close();
+	} else {
+		rl.question(chalk.blueBright("what do you want to do? \n Press e to exit, any other key to continue....  "), (choice) => {
+			console.log(`You selected ${choice}`);
+
+			if (choice.toLowerCase() !== "e") {
+				question();
+			} else {
+         console.log();
+         console.log(chalk.bgBlackBright("your final score is :",score));
+         console.log();
+         console.log(chalk.bold.bgCyan("HighScores"));
+        for(i=0;i<scores.length;i++)
+         {
+            var currentScorer=scores[i]
+
+           console.log(currentScorer.name)
+           console.log(currentScorer.hisScore)
+           console.log(chalk.bold.red("----------------"))
+   }
+				console.log(chalk.green.bold("thanks for playing....\n"));
+        console.log(chalk.magentaBright("please provide your valueble feedback here \n\n https://www.linkedin.com/in/avinashprajapati914\n",
+    "or\n","avinashprajapati914@gmail.com"))
+				rl.close();
+			}
+		});
+	}
+}
+
+
+
+function isQuestionBankExhausted() {
+	if (queBank.length == questionIndex) {
+		return true;
+	}
+}
+
+serve();
